@@ -3,3 +3,4 @@
 gem:
   name: state_mate
   versions: 0.0.1
+  executable: "{{ ansible_env.HOME }}/.rbenv/versions/2.1.2/bin/gem"
