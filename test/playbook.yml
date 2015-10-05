@@ -1,6 +1,9 @@
 ---
 - hosts: localhost
   gather_facts: false
+  roles:
+  - role: nrser.state_mate
+
   tasks:
   # - name: test defaults
   #   state:
