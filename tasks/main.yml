@@ -1,0 +1,5 @@
+---
+# tasks file for nrser.state_mate
+gem:
+  name: state_mate
+  versions: 0.0.1
