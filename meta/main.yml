@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: nrser
-  description: 
+  description: installs the state_mate gem and provides the `state` module.
   # company: your company (optional)
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
@@ -117,7 +117,7 @@ galaxy_info:
   # Below are all categories currently available. Just as with
   # the platforms above, uncomment those that apply to your role.
   #
-  #categories:
+  categories:
   #- cloud
   #- cloud:ec2
   #- cloud:gce
@@ -130,12 +130,9 @@ galaxy_info:
   #- monitoring
   #- networking
   #- packaging
-  #- system
+  - system
   #- web
-dependencies:
+dependencies: []
   # List your role dependencies here, one per line.
   # Be sure to remove the '[]' above if you add dependencies
   # to this list.
-  - role: nrser.rbenv
-    rbenv_rubies:
-    - 2.1.2

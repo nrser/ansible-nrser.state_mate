@@ -1,7 +1,6 @@
 ---
 # tasks file for nrser.state_mate
-- name: install state_mate gem for ruby 2.1.2
+- name: install state_mate gem
   gem:
     name: state_mate
-    version: 0.0.1
-    executable: "{{ ansible_env.HOME }}/.rbenv/versions/2.1.2/bin/gem"
+    version: "{{ state_mate_version }}"
