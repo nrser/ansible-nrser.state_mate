@@ -4,11 +4,6 @@ nrser.state_mate
 installs the `state_mate` gem and provides the `state` Ansible module for
 maintaining system state on OSX.
 
-Version
--------
-
-0.0.1
-
 Requirements
 ------------
 
