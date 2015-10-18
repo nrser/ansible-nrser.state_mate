@@ -1,0 +1,7 @@
+---
+- name: nrser.state_mate test playbook
+  hosts: localhost
+  gather_facts: false
+    
+  roles:
+  - role: nrser.state_mate

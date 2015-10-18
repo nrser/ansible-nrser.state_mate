@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 # WANT JSON
+# ^ i think this is something telling ansible to provide JSON args?
 
 require 'json'
 require 'shellwords'
