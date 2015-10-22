@@ -1,7 +1,7 @@
 PATH
   remote: /Users/nrser/dev/gh/nrser/state_mate
   specs:
-    state_mate (0.0.4)
+    state_mate (0.0.6.dev)
       CFPropertyList (~> 2.3)
       cmds (~> 0.0, >= 0.0.9)
       nrser (~> 0.0, >= 0.0.13)
