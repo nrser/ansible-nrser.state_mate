@@ -9,7 +9,7 @@ describe "nrser.state_mate:defaults" do
   let(:defaults) {
     StateMate::Adapters::Defaults
   }
-  
+
   before(:all) {
     # copy the role stuff
     FileUtils.rm_r ROLE_DIR if ROLE_DIR.exist?
@@ -20,18 +20,19 @@ describe "nrser.state_mate:defaults" do
       FileUtils.cp_r (ROOT + dir), dest
     end
   }
-  
+
   before(:each) {
     # this will error if the domain is missing
     Cmds 'defaults delete %{domain}', domain: DOMAIN
   }
-  
+
   VALUES = {
     boolean: [true, false],
     float: [24.0],
+    string: ["yes"],
     # hash: [{'x' => true, 'y' => 'why'}],
   }
-    
+
   VALUES.each do |type_name, values|
     context type_name do
       values.each do |value|
@@ -45,10 +46,10 @@ describe "nrser.state_mate:defaults" do
               }
             }
           ]
-          
+
           expect( defaults.read [DOMAIN, type_name.to_s] ).to eq value
         end
-        
+
         it "sets the #{ type_name } variable value #{ value.inspect }" do |ex|
           playbook vars: {
               'value' => value,
@@ -63,7 +64,7 @@ describe "nrser.state_mate:defaults" do
                 }
               }
             ]
-          
+
           expect( defaults.read [DOMAIN, type_name.to_s] ).to eq value
         end
       end
@@ -72,7 +73,7 @@ describe "nrser.state_mate:defaults" do
 
   # it "sets a float using a literal" do
   #   value = 24
-  #   
+  #
   #   playbook(
   #     tasks: [
   #       'name' => 'set float with literal',
@@ -84,13 +85,13 @@ describe "nrser.state_mate:defaults" do
   #       }
   #     ]
   #   )
-  #     
+  #
   #   expect( defaults.read [DOMAIN, 'float'] ).to eq value
   # end
-  # 
+  #
   # it "sets a float using a variable" do
   #   value = 24
-  #   
+  #
   #   playbook(
   #     vars: {
   #       'value' => value,
@@ -105,7 +106,7 @@ describe "nrser.state_mate:defaults" do
   #       }
   #     ]
   #   )
-  #     
+  #
   #   expect( defaults.read [DOMAIN, 'float'] ).to eq value
   # end
 end
