@@ -4,3 +4,4 @@
   gem:
     name: state_mate
     version: "{{ state_mate_version }}"
+    user_install: false
