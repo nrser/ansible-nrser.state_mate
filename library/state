@@ -1,12 +1,20 @@
 #!/usr/bin/env ruby
 # WANT_JSON
 
+# needed for dev
+begin
+  require 'bundler/setup'
+rescue LoadError => e
+end
+
 require 'json'
 require 'shellwords'
 require 'pp'
+require 'yaml'
 
 require 'nrser'
 require 'state_mate'
+require 'state_mate/adapters/yaml'
 
 using NRSER
 
@@ -14,6 +22,9 @@ def main
   input = nil
   args = nil
   changed = false
+  
+  # preorder for yaml keys
+  StateMate::Adapters::YAML.preorder = ['name', 'tags', 'command']
 
   begin
     input = File.read ARGV[0]
@@ -37,16 +48,29 @@ def main
     #
     spec = args.reject {|k, v| k.start_with? '_ansible'}
     
+    if spec['debug']
+      StateMate.debug = spec['debug']
+      spec.delete 'debug'
+      
+      StateMate.debug "START RUN #{ '*' * 42 }"
+      StateMate.debug YAML.dump(spec)
+    end
+    
     changes = StateMate.execute spec
+    
+    StateMate.debug changes: changes
 
     print JSON.dump({
       'changed' => !changes.empty?,
       'changes' => changes,
     })
   rescue Exception => e
+    StateMate.debug error: e
+    
     print JSON.dump({
       'failed' => true,
-      'msg' => e.format,
+      # 'msg' => e.format, # broken?
+      'msg' => e.message,
       # 'input' => input,
       'args' => args,
       # 'ARGV' => ARGV,
