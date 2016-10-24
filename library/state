@@ -17,7 +17,19 @@ require 'shellwords'
 require 'pp'
 require 'yaml'
 
-require 'nrser'
+# ugh... we need to clear the bundler env vars before running
+# `ansible-playbook` because they break the `git` ansible modules.
+# 
+# so, what we'll do is just try to require the first gem, and if it fails,
+# require bundler and try again...
+# 
+begin
+  require 'nrser'
+rescue LoadError => e
+  require 'bundler/setup'
+  require 'nrser'
+end
+
 require 'state_mate'
 require 'state_mate/adapters/yaml'
 
