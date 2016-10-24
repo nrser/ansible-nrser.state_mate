@@ -4,7 +4,7 @@
 # needed for dev
 begin
   require 'bundler/setup'
-rescue LoadError => e
+rescue Exception => e
 end
 
 require 'json'
