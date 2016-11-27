@@ -1,35 +1,30 @@
 #!/usr/bin/env ruby
 # WANT_JSON
 
-
-# def in_bundle?
-  
-
-# conditionally setup bundler if we're in a bundle
-# 
-# if 
-#   require 'bundler/setup'
-# rescue Exception => e
-# end
-
-require 'json'
-require 'shellwords'
-require 'pp'
-require 'yaml'
-
 # ugh... we need to clear the bundler env vars before running
-# `ansible-playbook` because they break the `git` ansible modules.
+# `ansible-playbook` because they break the `git` ansible modules, so we
+# don't have the bundler env vars here when we're in dev.
 # 
-# so, what we'll do is just try to require the first gem, and if it fails,
-# require bundler and try again...
+# what we do is have exe/qb copy all the bundler env vars to
+# `QB_DEV_ENV_<NAME` ones around the env sanitization, along with adding
+# `QB_DEV_ENV=true`. then we pick those up here and restore them.
 # 
-begin
-  require 'nrser'
-rescue LoadError => e
+if ENV['QB_DEV_ENV']
+  ENV.each {|k, v|
+    if k.start_with? 'QB_DEV_ENV_'
+      ENV[k.sub('QB_DEV_ENV_', '')] = v
+    end
+  }
+  
   require 'bundler/setup'
-  require 'nrser'
 end
 
+require 'pp'
+require 'json'
+require 'shellwords'
+require 'yaml'
+
+require 'nrser'
 require 'state_mate'
 require 'state_mate/adapters/yaml'
 
