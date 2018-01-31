@@ -4,7 +4,6 @@ require 'yaml'
 require 'cmds'
 
 require 'nrser/refinements'
-require 'nrser/extras'
 
 using NRSER
 
