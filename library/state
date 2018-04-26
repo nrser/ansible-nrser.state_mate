@@ -1,23 +1,9 @@
 #!/usr/bin/env ruby
 # WANT_JSON
 
-# ugh... we need to clear the bundler env vars before running
-# `ansible-playbook` because they break the `git` ansible modules, so we
-# don't have the bundler env vars here when we're in dev.
-# 
-# what we do is have exe/qb copy all the bundler env vars to
-# `QB_DEV_ENV_<NAME` ones around the env sanitization, along with adding
-# `QB_DEV_ENV=true`. then we pick those up here and restore them.
-# 
-if ENV['QB_DEV_ENV']
-  ENV.each {|k, v|
-    if k.start_with? 'QB_DEV_ENV_'
-      ENV[k.sub('QB_DEV_ENV_', '')] = v
-    end
-  }
-  
-  require 'bundler/setup'
-end
+# Reinstate Bundler ENV vars if they have been moved
+load ENV['QB_REBUNDLE_PATH'] if ENV['QB_REBUNDLE_PATH']
+
 
 require 'pp'
 require 'json'
